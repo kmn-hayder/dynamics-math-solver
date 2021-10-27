@@ -1,0 +1,264 @@
+#include<stdio.h>
+#include<conio.h>
+#include<math.h>
+main()
+{
+    float p,q,d,f,b,m,g;
+    char ch;
+    printf("INFORMATION: THIS PROGRAM IS MADE FOR DEFINING THE UNKNOWN DATA FROM THE 4 BASIC FORMULAS OF DYNAMICS. WE CALL THESE DATAS 'SUVAT' IF YOU KNOW THE VALUE OF ANY 3 OF THESE, YOU CAN FIND OUT THE OTHER 2 EASILY. \n \n");
+    printf("PLEASE NOTE: INPUT ALL DATA IN METER,KILOGRAM AND SECOND, THAT MEANS MKS UNITS. THE PROGRAM WILL GIVE YOU AN OUTPUT IN MKS.\n \n");
+    printf("REMEMBER: \n If you want to find distance traveled, press s \n OR if you want to find starting velocity, press u \n OR if you want to find ending velocity, press v \n OR if you want to find acceleration, press a \n OR if you want to find the time of travel, press t \n ");
+    printf(" \n \n Enter the data you gotta find:");
+    ch=getche();
+    switch(ch)
+{
+case 's':
+{
+    {
+        int r;
+    printf("\nWhich data do you have? \n If you have starting velocity, acceleration and time of travel, press 1. \n If you have starting velocity, ending velocity and acceleration, press 2. \n If you have starting velocity, ending velocity and time, press 3.");
+    scanf("%d",&r);
+    if (r==1)
+    {
+    printf(" \n Enter the starting velocity of the car:\n");
+    scanf("%f",&f);
+    printf(" \n Enter the acceleration of the car:\n");
+    scanf("%f",&m);
+    printf(" \n Enter the time of travel:\n");
+    scanf("%f",&g);
+    p=(f*g)+((1/2)*(m*g*g));
+    printf(" \n The total distance traveled by the car is %.2f", p);
+    }
+    else if (r==2)
+    {
+    printf(" \n Enter the starting velocity of the car:\n");
+    scanf("%f",&f);
+    printf(" \n Enter the ending velocity:\n");
+    scanf("%f",&b);
+    printf(" \n Enter the acceleration of the car:\n");
+    scanf("%f",&m);
+    p=(b*b-f*f)/(2*m);
+    printf(" \n The total distance traveled by the car is %.2f", p);
+    }
+    else if (r==3)
+    {
+    printf(" \n Enter the starting velocity of the car:\n");
+    scanf("%f",&f);
+    printf(" \n Enter the ending velocity:\n");
+    scanf("%f",&b);
+    printf(" \n Enter the time of travel:\n");
+    scanf("%f",&g);
+    p=(f*g+b*g)/2;
+    printf(" \n The total distance traveled by the car is %.2f", p);
+    }
+    else
+    {
+        printf("Invalid Entry.");
+    }
+    };
+    break;
+}
+case 'u':
+{
+{
+    int r;
+    printf("\nWhich data do you have? \n If you have distance, acceleration and time of travel, press 1. \n If you have distance, ending velocity and time of travel, press 2. \n If you have distance, acceleration and ending velocity, press 3. \n If you have ending velocity, acceleration and time of travel, press 4.");
+    scanf("%d",&r);
+    if (r==1)
+    {
+    printf(" \n Enter the distance passed by the car:\n");
+    scanf("%f",&d);
+    printf(" \n Enter the acceleration of the car:\n");
+    scanf("%f",&m);
+    printf(" \n Enter the time of travel:\n");
+    scanf("%f",&g);
+    p=((2*d)-(m*g*g))/(2*g);
+    printf(" \n The starting speed of the car is %.2f", p);
+    }
+    else if (r==2)
+    {
+    printf(" \n Enter the distance traveled by the car:\n");
+    scanf("%f",&d);
+    printf(" \n Enter the ending velocity of the car:\n");
+    scanf("%f",&b);
+    printf(" \n Enter the time of travel of the car:\n");
+    scanf("%f",&g);
+    p=(2*d-b*g)/(g);
+    printf(" \n The starting velocity of the car is %.2f", p);
+    }
+    else if (r==3)
+    {
+    printf(" \n Enter the distance traveled by the car:\n");
+    scanf("%f",&d);
+    printf(" \n Enter the acceleration of the car:\n");
+    scanf("%f",&m);
+    printf(" \n Enter the ending velocity of the car:\n");
+    scanf("%f",&b);
+    p=sqrt((b*b-2*m*d));
+    printf(" \n The starting velocity of the car is %.2f", p);
+    }
+    else if (r==4)
+    {
+    printf(" \n Enter the ending velocity of the car:\n");
+    scanf("%f",&b);
+    printf(" \n Enter the acceleration of the car:\n");
+    scanf("%f",&m);
+    printf(" \n Enter the time of travel of the car:\n");
+    scanf("%f",&g);
+    p=b-(m*g);
+    printf(" \n The starting velocity of the car is %.2f", p);
+    }
+    else
+    {
+        printf("Invalid Entry.");
+    }
+    }
+    break;
+}
+case 'v':
+{
+    {
+    int r;
+    printf("\nWhich data do you have? \n If you have distance, starting velocity and time of travel, press 1. \n If you have distance, starting velocity and acceleration, press 2. \n If you have starting velocity, acceleration and time of travel, press 3. \n");
+    scanf("%d",&r);
+    if (r==1)
+         {
+           printf(" \n Enter the distance passed by the car:\n");
+           scanf("%f",&d);
+           printf(" \n Enter the starting velocity of the car:\n");
+           scanf("%f",&f);
+           printf(" \n Enter the time of travel:\n");
+           scanf("%f",&g);
+           p=((2*d)-(f*g))/g;
+           printf(" \n The ending speed of the car is %.2f", p);
+        }
+    else if (r==2)
+        {
+           printf(" \n Enter the distance traveled by the car:\n");
+           scanf("%f",&d);
+           printf(" \n Enter the starting velocity of the car:\n");
+           scanf("%f",&f);
+           printf(" \n Enter the acceleration of the car:\n");
+           scanf("%f",&m);
+           p=sqrt(f*f+2*m*d);
+           printf(" \n The ending velocity of the car is %.2f", p);
+        }
+    else if (r==3)
+        {
+           printf(" \n Enter the starting velocity the car:\n");
+           scanf("%f",&f);
+           printf(" \n Enter the acceleration of the car:\n");
+           scanf("%f",&m);
+           printf(" \n Enter the time of travel of the car:\n");
+           scanf("%f",&g);
+           p=f+m*g;
+           printf(" \n The ending velocity of the car is %.2f", p);
+        }
+    else
+        {
+           printf("Invalid Entry.");
+        }
+}
+break;
+}
+case 'a':
+{
+    {
+    int r;
+    printf("\nWhich data do you have? \n If you have distance, starting velocity and time of travel, press 1. \n If you have distance, starting velocity and ending velocity, press 2. \n If you have starting velocity, ending velocity and time of travel, press 3. \n");
+    scanf("%d",&r);
+    if (r==1)
+         {
+           printf(" \n Enter the distance passed by the car:\n");
+           scanf("%f",&d);
+           printf(" \n Enter the starting velocity of the car:\n");
+           scanf("%f",&f);
+           printf(" \n Enter the time of travel:\n");
+           scanf("%f",&g);
+           p=((2*d)-(2*f*g))/(g*g);
+           printf(" \n The acceleration of the car is %.2f", p);
+        }
+    else if (r==2)
+        {
+           printf(" \n Enter the distance traveled by the car:\n");
+           scanf("%f",&d);
+           printf(" \n Enter the starting velocity of the car:\n");
+           scanf("%f",&f);
+           printf(" \n Enter the ending velocity of the car:\n");
+           scanf("%f",&b);
+           p=(b*b-f*f)/(2*d);
+           printf(" \n The acceleration of the car is %.2f", p);
+        }
+    else if (r==3)
+        {
+           printf(" \n Enter the starting velocity the car:\n");
+           scanf("%f",&f);
+           printf(" \n Enter the ending velocity of the car:\n");
+           scanf("%f",&b);
+           printf(" \n Enter the time of travel of the car:\n");
+           scanf("%f",&g);
+           p=(b-f)/g;
+           printf(" \n The acceleration of the car is %.2f", p);
+        }
+    else
+        {
+           printf("Invalid Entry.");
+        }
+}
+break;
+}
+case 't':
+{
+    {
+    int r;
+    printf("\nWhich data do you have? \n If you have distance, starting velocity and acceleration, press 1. \n If you have distance, starting velocity and ending velocity, press 2. \n If you have starting velocity, ending velocity and acceleration, press 3. \n");
+    scanf("%d",&r);
+    if (r==1)
+         {
+           printf(" \n Enter the distance passed by the car:\n");
+           scanf("%f",&d);
+           printf(" \n Enter the starting velocity of the car:\n");
+           scanf("%f",&f);
+           printf(" \n Enter the acceleration:\n");
+           scanf("%f",&m);
+           p=(-m+sqrt(4*f*f+8*m*d))/(2*m);
+           q=(-m-sqrt(4*f*f+8*m*d))/(2*m);
+           printf(" \n The time of travel of the car is %.2f and %.2f (Ignore the negative value)",p,q);
+        }
+    else if (r==2)
+        {
+           printf(" \n Enter the distance traveled by the car:\n");
+           scanf("%f",&d);
+           printf(" \n Enter the starting velocity of the car:\n");
+           scanf("%f",&f);
+           printf(" \n Enter the ending velocity of the car:\n");
+           scanf("%f",&b);
+           p=(f+b)/(2*d);
+           printf(" \n The time of travel of the car is %.2f", p);
+        }
+    else if (r==3)
+        {
+           printf(" \n Enter the starting velocity the car:\n");
+           scanf("%f",&f);
+           printf(" \n Enter the ending velocity of the car:\n");
+           scanf("%f",&b);
+           printf(" \n Enter the acceleration of the car:\n");
+           scanf("%f",&m);
+           p=(b-f)/m;
+           printf(" \n The time of travel of the car is %.2f", p);
+        }
+    else
+        {
+           printf("Invalid Entry.");
+        }
+}
+break;
+}
+default:
+{
+    printf("\nInvalid input.");
+}
+}
+printf("\n \n \n GREETINGS FROM K.M. NAJIB HAYDER.");
+getch();
+}
