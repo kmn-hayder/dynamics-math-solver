@@ -40,7 +40,6 @@ h1 {
   margin-top: 0;
   text-align: center;
   font-weight: 600;
-  letter-spacing: 1px;
 }
 
 .subtitle {
@@ -90,17 +89,16 @@ select {
 button {
   width: 100%;
   padding: 10px;
-  margin-top: 12px;
-  background: var(--accent);
+  margin-top: 10px;
   border: none;
   border-radius: 4px;
-  color: black;
   font-weight: 600;
   cursor: pointer;
 }
 
-button:hover {
-  opacity: 0.9;
+.calculate-btn {
+  background: var(--accent);
+  color: black;
 }
 
 .reset-btn {
@@ -109,10 +107,10 @@ button:hover {
 }
 
 .message {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 13px;
-  color: var(--error);
   text-align: center;
+  color: var(--error);
 }
 
 .footer {
@@ -127,7 +125,7 @@ button:hover {
 
 <div class="container">
   <h1>SUVAT Solver</h1>
-  <div class="subtitle">Enter any 3 values. The other 2 are computed automatically.</div>
+  <div class="subtitle">Enter any 3 values. Click Calculate.</div>
 
   <div class="field">
     <label>Distance (S)</label>
@@ -145,7 +143,7 @@ button:hover {
     <label>Initial Velocity (U)</label>
     <div class="input-row">
       <input type="number" id="u">
-      <select id="vUnit">
+      <select id="uUnit">
         <option value="mps">m/s</option>
         <option value="kmph">km/h</option>
       </select>
@@ -156,7 +154,7 @@ button:hover {
     <label>Final Velocity (V)</label>
     <div class="input-row">
       <input type="number" id="v">
-      <select id="vUnit2">
+      <select id="vUnit">
         <option value="mps">m/s</option>
         <option value="kmph">km/h</option>
       </select>
@@ -182,10 +180,10 @@ button:hover {
     </div>
   </div>
 
-  <button onclick="resetFields()" class="reset-btn">Reset</button>
+  <button class="calculate-btn" onclick="calculate()">Calculate</button>
+  <button class="reset-btn" onclick="resetFields()">Reset</button>
 
   <div class="message" id="message"></div>
-
   <div class="footer">All calculations performed internally in SI units.</div>
 </div>
 
@@ -248,15 +246,12 @@ function calculate() {
     return;
   }
 
-  // Convert to SI
   s = s !== null ? toSI(s, 'distance', sUnit.value) : null;
-  u = u !== null ? toSI(u, 'velocity', vUnit.value) : null;
-  v = v !== null ? toSI(v, 'velocity', vUnit2.value) : null;
+  u = u !== null ? toSI(u, 'velocity', uUnit.value) : null;
+  v = v !== null ? toSI(v, 'velocity', vUnit.value) : null;
   a = a !== null ? toSI(a, 'acceleration', aUnit.value) : null;
 
   try {
-
-    // Core combinations
 
     if (u !== null && a !== null && t !== null) {
       v = u + a*t;
@@ -264,12 +259,13 @@ function calculate() {
     }
 
     else if (u !== null && v !== null && t !== null) {
+      if (t === 0) throw "Time cannot be zero.";
       a = (v-u)/t;
       s = ((u+v)/2)*t;
     }
 
     else if (u !== null && v !== null && a !== null) {
-      if (a === 0) throw "Acceleration cannot be zero here.";
+      if (a === 0) throw "Acceleration cannot be zero.";
       t = (v-u)/a;
       s = (u+v)/2*t;
     }
@@ -295,28 +291,14 @@ function calculate() {
     }
 
     else {
-      throw "This combination is not supported.";
+      throw "Unsupported combination.";
     }
 
-    // Convert back
-    if (s !== null)
-      document.getElementById("s").value =
-        fromSI(s,'distance',sUnit.value).toFixed(4);
-
-    if (u !== null)
-      document.getElementById("u").value =
-        fromSI(u,'velocity',vUnit.value).toFixed(4);
-
-    if (v !== null)
-      document.getElementById("v").value =
-        fromSI(v,'velocity',vUnit2.value).toFixed(4);
-
-    if (a !== null)
-      document.getElementById("a").value =
-        fromSI(a,'acceleration',aUnit.value).toFixed(4);
-
-    if (t !== null)
-      document.getElementById("t").value = t.toFixed(4);
+    document.getElementById("s").value = fromSI(s,'distance',sUnit.value).toFixed(4);
+    document.getElementById("u").value = fromSI(u,'velocity',uUnit.value).toFixed(4);
+    document.getElementById("v").value = fromSI(v,'velocity',vUnit.value).toFixed(4);
+    document.getElementById("a").value = fromSI(a,'acceleration',aUnit.value).toFixed(4);
+    document.getElementById("t").value = t.toFixed(4);
 
     document.getElementById("message").textContent = "";
 
