@@ -1,4 +1,62 @@
-# SUVAT Dynamics Calculator
+# SUVAT Dynamics Calculator - Using the html
+A browser-based physics calculator that solves constant-acceleration motion problems using the five SUVAT variables:
+
+- **S** – Displacement  
+- **U** – Initial Velocity  
+- **V** – Final Velocity  
+- **A** – Acceleration  
+- **T** – Time  
+
+Enter **any 3 values**, click **Calculate**, and the remaining variables are solved automatically.
+
+## Features
+
+- Solves all mathematically valid 3-variable combinations  
+- Uses all 5 SUVAT equations  
+- Iterative constraint-based solver  
+- Supports unit conversion  
+- Handles invalid / impossible inputs  
+- Clean, minimal UI  
+
+## Physics Assumption
+
+This solver assumes:
+
+> **Constant acceleration motion in one dimension**
+
+The equations used internally:
+
+1. `v = u + at`
+2. `s = ut + ½at²`
+3. `v² = u² + 2as`
+4. `s = (u + v)/2 × t`
+
+All calculations are performed in **SI units internally**, regardless of input units.
+
+## Supported Units
+
+| Variable | Units |
+|----------|--------|
+| Distance (S) | m, cm, km |
+| Velocity (U, V) | m/s, km/h |
+| Acceleration (A) | m/s², cm/s² |
+| Time (T) | seconds |
+
+## How It Works
+
+Instead of using hardcoded condition chains, the solver:
+
+1. Converts inputs into SI units.
+2. Iteratively applies all SUVAT equations.
+3. Propagates new values when solvable.
+4. Stops when no further variables can be computed.
+5. Converts results back to selected units.
+
+This makes it flexible and mathematically complete for constant acceleration motion.
+
+---
+
+# SUVAT Dynamics Calculator - Using main.c
 
 This program calculates the unknown data from the 4 basic formulas of dynamics (SUVAT) if you know the values of any 3 of these, you can find the other 2 easily. The program is designed to take inputs in the MKS (Meter, Kilogram, Second) units and provide output in the same.
 
