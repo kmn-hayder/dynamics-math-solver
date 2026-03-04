@@ -190,7 +190,6 @@ button:hover {
 </div>
 
 <script>
-// Unit conversions
 function toSI(value, type, unit) {
   if (value === null) return null;
 
@@ -234,7 +233,7 @@ function getValue(id) {
   return val === "" ? null : parseFloat(val);
 }
 
-function trySolve() {
+function calculate() {
   let s = getValue("s");
   let u = getValue("u");
   let v = getValue("v");
@@ -242,7 +241,12 @@ function trySolve() {
   let t = getValue("t");
 
   const filled = [s,u,v,a,t].filter(x => x !== null).length;
-  if (filled !== 3) return;
+
+  if (filled < 3) {
+    document.getElementById("message").textContent =
+      "Please enter at least 3 values.";
+    return;
+  }
 
   // Convert to SI
   s = s !== null ? toSI(s, 'distance', sUnit.value) : null;
@@ -251,63 +255,82 @@ function trySolve() {
   a = a !== null ? toSI(a, 'acceleration', aUnit.value) : null;
 
   try {
-    // Example core logic
+
+    // Core combinations
+
     if (u !== null && a !== null && t !== null) {
       v = u + a*t;
       s = u*t + 0.5*a*t*t;
     }
+
     else if (u !== null && v !== null && t !== null) {
       a = (v-u)/t;
       s = ((u+v)/2)*t;
     }
+
     else if (u !== null && v !== null && a !== null) {
+      if (a === 0) throw "Acceleration cannot be zero here.";
       t = (v-u)/a;
       s = (u+v)/2*t;
     }
+
     else if (s !== null && u !== null && t !== null) {
+      if (t === 0) throw "Time cannot be zero.";
       a = (2*(s - u*t))/(t*t);
       v = u + a*t;
     }
+
     else if (s !== null && u !== null && a !== null) {
-      v = Math.sqrt(u*u + 2*a*s);
+      const inside = u*u + 2*a*s;
+      if (inside < 0) throw "No real solution.";
+      v = Math.sqrt(inside);
       t = (v-u)/a;
     }
+
     else if (s !== null && v !== null && a !== null) {
-      u = Math.sqrt(v*v - 2*a*s);
+      const inside = v*v - 2*a*s;
+      if (inside < 0) throw "No real solution.";
+      u = Math.sqrt(inside);
       t = (v-u)/a;
     }
 
-    // Convert back to selected units
-    if (s !== null && document.getElementById("s").value === "")
-      document.getElementById("s").value = fromSI(s,'distance',sUnit.value).toFixed(4);
+    else {
+      throw "This combination is not supported.";
+    }
 
-    if (u !== null && document.getElementById("u").value === "")
-      document.getElementById("u").value = fromSI(u,'velocity',vUnit.value).toFixed(4);
+    // Convert back
+    if (s !== null)
+      document.getElementById("s").value =
+        fromSI(s,'distance',sUnit.value).toFixed(4);
 
-    if (v !== null && document.getElementById("v").value === "")
-      document.getElementById("v").value = fromSI(v,'velocity',vUnit2.value).toFixed(4);
+    if (u !== null)
+      document.getElementById("u").value =
+        fromSI(u,'velocity',vUnit.value).toFixed(4);
 
-    if (a !== null && document.getElementById("a").value === "")
-      document.getElementById("a").value = fromSI(a,'acceleration',aUnit.value).toFixed(4);
+    if (v !== null)
+      document.getElementById("v").value =
+        fromSI(v,'velocity',vUnit2.value).toFixed(4);
 
-    if (t !== null && document.getElementById("t").value === "")
+    if (a !== null)
+      document.getElementById("a").value =
+        fromSI(a,'acceleration',aUnit.value).toFixed(4);
+
+    if (t !== null)
       document.getElementById("t").value = t.toFixed(4);
 
     document.getElementById("message").textContent = "";
-  }
-  catch {
-    document.getElementById("message").textContent = "Invalid combination or impossible values.";
+
+  } catch (err) {
+    document.getElementById("message").textContent = err;
   }
 }
 
 function resetFields() {
-  ["s","u","v","a","t"].forEach(id => document.getElementById(id).value = "");
+  ["s","u","v","a","t"].forEach(id =>
+    document.getElementById(id).value = ""
+  );
   document.getElementById("message").textContent = "";
 }
-
-document.querySelectorAll("input").forEach(input =>
-  input.addEventListener("input", trySolve)
-);
 </script>
 
 </body>
