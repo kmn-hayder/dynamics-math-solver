@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUVAT Solver</title>
+<title>Advanced SUVAT Solver</title>
 
 <style>
 :root {
@@ -14,12 +14,10 @@
   --muted: #94a3b8;
   --error: #f87171;
 }
-
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
   display: flex;
@@ -27,293 +25,271 @@ body {
   align-items: center;
   min-height: 100vh;
 }
-
 .container {
   background: var(--card);
   padding: 30px;
-  border-radius: 8px;
+  border-radius: 10px;
   width: 420px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
 }
-
-h1 {
-  margin-top: 0;
-  text-align: center;
-  font-weight: 600;
-}
-
+h1 { text-align:center; margin-top:0; }
 .subtitle {
-  text-align: center;
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 20px;
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:20px;
 }
-
-.field {
-  margin-bottom: 14px;
+.field { margin-bottom:14px; }
+label { font-size:13px; display:block; margin-bottom:4px; }
+.input-row { display:flex; gap:8px; }
+input, select {
+  flex:1;
+  padding:8px;
+  background:#0f172a;
+  border:1px solid #334155;
+  color:var(--text);
+  border-radius:4px;
 }
-
-label {
-  font-size: 13px;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.input-row {
-  display: flex;
-  gap: 8px;
-}
-
-input {
-  flex: 1;
-  padding: 8px;
-  background: #0f172a;
-  border: 1px solid #334155;
-  color: var(--text);
-  border-radius: 4px;
-}
-
-input:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-select {
-  padding: 8px;
-  background: #0f172a;
-  border: 1px solid #334155;
-  color: var(--text);
-  border-radius: 4px;
-}
-
 button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:4px;
+  font-weight:600;
+  cursor:pointer;
 }
-
-.calculate-btn {
-  background: var(--accent);
-  color: black;
-}
-
-.reset-btn {
-  background: #334155;
-  color: var(--text);
-}
-
+.calculate-btn { background:var(--accent); color:black; }
+.reset-btn { background:#334155; color:var(--text); }
 .message {
-  margin-top: 12px;
-  font-size: 13px;
-  text-align: center;
-  color: var(--error);
+  margin-top:12px;
+  font-size:13px;
+  text-align:center;
+  color:var(--error);
 }
-
 .footer {
-  margin-top: 18px;
-  font-size: 11px;
-  text-align: center;
-  color: var(--muted);
+  margin-top:18px;
+  font-size:11px;
+  text-align:center;
+  color:var(--muted);
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>SUVAT Solver</h1>
-  <div class="subtitle">Enter any 3 values. Click Calculate.</div>
+<h1>SUVAT Solver</h1>
+<div class="subtitle">Enter any 3 values. Constant acceleration assumed.</div>
 
-  <div class="field">
-    <label>Distance (S)</label>
-    <div class="input-row">
-      <input type="number" id="s">
-      <select id="sUnit">
-        <option value="m">m</option>
-        <option value="cm">cm</option>
-        <option value="km">km</option>
-      </select>
-    </div>
-  </div>
+<div class="field">
+<label>Distance (S)</label>
+<div class="input-row">
+<input type="number" id="s">
+<select id="sUnit">
+<option value="m">m</option>
+<option value="cm">cm</option>
+<option value="km">km</option>
+</select>
+</div>
+</div>
 
-  <div class="field">
-    <label>Initial Velocity (U)</label>
-    <div class="input-row">
-      <input type="number" id="u">
-      <select id="uUnit">
-        <option value="mps">m/s</option>
-        <option value="kmph">km/h</option>
-      </select>
-    </div>
-  </div>
+<div class="field">
+<label>Initial Velocity (U)</label>
+<div class="input-row">
+<input type="number" id="u">
+<select id="uUnit">
+<option value="mps">m/s</option>
+<option value="kmph">km/h</option>
+</select>
+</div>
+</div>
 
-  <div class="field">
-    <label>Final Velocity (V)</label>
-    <div class="input-row">
-      <input type="number" id="v">
-      <select id="vUnit">
-        <option value="mps">m/s</option>
-        <option value="kmph">km/h</option>
-      </select>
-    </div>
-  </div>
+<div class="field">
+<label>Final Velocity (V)</label>
+<div class="input-row">
+<input type="number" id="v">
+<select id="vUnit">
+<option value="mps">m/s</option>
+<option value="kmph">km/h</option>
+</select>
+</div>
+</div>
 
-  <div class="field">
-    <label>Acceleration (A)</label>
-    <div class="input-row">
-      <input type="number" id="a">
-      <select id="aUnit">
-        <option value="mps2">m/s²</option>
-        <option value="cmps2">cm/s²</option>
-      </select>
-    </div>
-  </div>
+<div class="field">
+<label>Acceleration (A)</label>
+<div class="input-row">
+<input type="number" id="a">
+<select id="aUnit">
+<option value="mps2">m/s²</option>
+<option value="cmps2">cm/s²</option>
+</select>
+</div>
+</div>
 
-  <div class="field">
-    <label>Time (T)</label>
-    <div class="input-row">
-      <input type="number" id="t">
-      <span style="padding:8px;">s</span>
-    </div>
-  </div>
+<div class="field">
+<label>Time (T)</label>
+<div class="input-row">
+<input type="number" id="t">
+<span style="padding:8px;">s</span>
+</div>
+</div>
 
-  <button class="calculate-btn" onclick="calculate()">Calculate</button>
-  <button class="reset-btn" onclick="resetFields()">Reset</button>
+<button class="calculate-btn" onclick="calculate()">Calculate</button>
+<button class="reset-btn" onclick="resetFields()">Reset</button>
 
-  <div class="message" id="message"></div>
-  <div class="footer">All calculations performed internally in SI units.</div>
+<div class="message" id="message"></div>
+<div class="footer">All internal calculations use SI units.</div>
 </div>
 
 <script>
+
+// ---------- UNIT CONVERSION ----------
 function toSI(value, type, unit) {
   if (value === null) return null;
-
   if (type === 'distance') {
-    if (unit === 'cm') return value / 100;
-    if (unit === 'km') return value * 1000;
+    if (unit === 'cm') return value/100;
+    if (unit === 'km') return value*1000;
   }
-
   if (type === 'velocity') {
-    if (unit === 'kmph') return value / 3.6;
+    if (unit === 'kmph') return value/3.6;
   }
-
   if (type === 'acceleration') {
-    if (unit === 'cmps2') return value / 100;
+    if (unit === 'cmps2') return value/100;
   }
-
   return value;
 }
 
 function fromSI(value, type, unit) {
   if (value === null) return null;
-
   if (type === 'distance') {
-    if (unit === 'cm') return value * 100;
-    if (unit === 'km') return value / 1000;
+    if (unit === 'cm') return value*100;
+    if (unit === 'km') return value/1000;
   }
-
   if (type === 'velocity') {
-    if (unit === 'kmph') return value * 3.6;
+    if (unit === 'kmph') return value*3.6;
   }
-
   if (type === 'acceleration') {
-    if (unit === 'cmps2') return value * 100;
+    if (unit === 'cmps2') return value*100;
   }
-
   return value;
 }
 
-function getValue(id) {
-  const val = document.getElementById(id).value;
-  return val === "" ? null : parseFloat(val);
+function getVal(id) {
+  const v = document.getElementById(id).value;
+  return v === "" ? null : parseFloat(v);
 }
 
+// ---------- CORE SOLVER ----------
 function calculate() {
-  let s = getValue("s");
-  let u = getValue("u");
-  let v = getValue("v");
-  let a = getValue("a");
-  let t = getValue("t");
 
-  const filled = [s,u,v,a,t].filter(x => x !== null).length;
+  let s = getVal("s");
+  let u = getVal("u");
+  let v = getVal("v");
+  let a = getVal("a");
+  let t = getVal("t");
 
-  if (filled < 3) {
+  const known = [s,u,v,a,t].filter(x=>x!==null).length;
+  if (known < 3) {
     document.getElementById("message").textContent =
-      "Please enter at least 3 values.";
+      "Enter at least 3 values.";
     return;
   }
 
-  s = s !== null ? toSI(s, 'distance', sUnit.value) : null;
-  u = u !== null ? toSI(u, 'velocity', uUnit.value) : null;
-  v = v !== null ? toSI(v, 'velocity', vUnit.value) : null;
-  a = a !== null ? toSI(a, 'acceleration', aUnit.value) : null;
+  // convert to SI
+  s = s!==null?toSI(s,'distance',sUnit.value):null;
+  u = u!==null?toSI(u,'velocity',uUnit.value):null;
+  v = v!==null?toSI(v,'velocity',vUnit.value):null;
+  a = a!==null?toSI(a,'acceleration',aUnit.value):null;
 
   try {
 
-    if (u !== null && a !== null && t !== null) {
-      v = u + a*t;
-      s = u*t + 0.5*a*t*t;
+    let progress = true;
+    while(progress){
+      progress = false;
+
+      // v = u + at
+      if(v===null && u!==null && a!==null && t!==null){
+        v = u + a*t; progress=true;
+      }
+
+      if(u===null && v!==null && a!==null && t!==null){
+        u = v - a*t; progress=true;
+      }
+
+      if(a===null && u!==null && v!==null && t!==null){
+        if(t===0) throw "Time cannot be zero.";
+        a = (v-u)/t; progress=true;
+      }
+
+      if(t===null && u!==null && v!==null && a!==null){
+        if(a===0) throw "Acceleration cannot be zero.";
+        t = (v-u)/a; progress=true;
+      }
+
+      // s = ut + 1/2 at²
+      if(s===null && u!==null && a!==null && t!==null){
+        s = u*t + 0.5*a*t*t; progress=true;
+      }
+
+      // v² = u² + 2as
+      if(v===null && u!==null && a!==null && s!==null){
+        const inside = u*u + 2*a*s;
+        if(inside<0) throw "No real solution.";
+        v = Math.sqrt(inside); progress=true;
+      }
+
+      if(u===null && v!==null && a!==null && s!==null){
+        const inside = v*v - 2*a*s;
+        if(inside<0) throw "No real solution.";
+        u = Math.sqrt(inside); progress=true;
+      }
+
+      if(a===null && u!==null && v!==null && s!==null){
+        if(s===0) throw "Distance cannot be zero.";
+        a = (v*v - u*u)/(2*s); progress=true;
+      }
+
+      // s = (u+v)/2 t
+      if(s===null && u!==null && v!==null && t!==null){
+        s = ((u+v)/2)*t; progress=true;
+      }
+
+      if(t===null && s!==null && u!==null && v!==null){
+        if((u+v)===0) throw "u+v cannot be zero.";
+        t = (2*s)/(u+v); progress=true;
+      }
+
     }
 
-    else if (u !== null && v !== null && t !== null) {
-      if (t === 0) throw "Time cannot be zero.";
-      a = (v-u)/t;
-      s = ((u+v)/2)*t;
-    }
+    if([s,u,v,a,t].includes(null))
+      throw "Combination insufficient or ambiguous.";
 
-    else if (u !== null && v !== null && a !== null) {
-      if (a === 0) throw "Acceleration cannot be zero.";
-      t = (v-u)/a;
-      s = (u+v)/2*t;
-    }
+    // write back
+    document.getElementById("s").value =
+      fromSI(s,'distance',sUnit.value).toFixed(4);
+    document.getElementById("u").value =
+      fromSI(u,'velocity',uUnit.value).toFixed(4);
+    document.getElementById("v").value =
+      fromSI(v,'velocity',vUnit.value).toFixed(4);
+    document.getElementById("a").value =
+      fromSI(a,'acceleration',aUnit.value).toFixed(4);
+    document.getElementById("t").value =
+      t.toFixed(4);
 
-    else if (s !== null && u !== null && t !== null) {
-      if (t === 0) throw "Time cannot be zero.";
-      a = (2*(s - u*t))/(t*t);
-      v = u + a*t;
-    }
+    document.getElementById("message").textContent="";
 
-    else if (s !== null && u !== null && a !== null) {
-      const inside = u*u + 2*a*s;
-      if (inside < 0) throw "No real solution.";
-      v = Math.sqrt(inside);
-      t = (v-u)/a;
-    }
-
-    else if (s !== null && v !== null && a !== null) {
-      const inside = v*v - 2*a*s;
-      if (inside < 0) throw "No real solution.";
-      u = Math.sqrt(inside);
-      t = (v-u)/a;
-    }
-
-    else {
-      throw "Unsupported combination.";
-    }
-
-    document.getElementById("s").value = fromSI(s,'distance',sUnit.value).toFixed(4);
-    document.getElementById("u").value = fromSI(u,'velocity',uUnit.value).toFixed(4);
-    document.getElementById("v").value = fromSI(v,'velocity',vUnit.value).toFixed(4);
-    document.getElementById("a").value = fromSI(a,'acceleration',aUnit.value).toFixed(4);
-    document.getElementById("t").value = t.toFixed(4);
-
-    document.getElementById("message").textContent = "";
-
-  } catch (err) {
+  } catch(err){
     document.getElementById("message").textContent = err;
   }
 }
 
-function resetFields() {
-  ["s","u","v","a","t"].forEach(id =>
-    document.getElementById(id).value = ""
-  );
-  document.getElementById("message").textContent = "";
+function resetFields(){
+  ["s","u","v","a","t"].forEach(id=>{
+    document.getElementById(id).value="";
+  });
+  document.getElementById("message").textContent="";
 }
-</script>
 
+</script>
 </body>
 </html>
